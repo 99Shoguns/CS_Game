@@ -6,13 +6,13 @@
 #include "item.h"
 using namespace std;
 
-Class Trader
+class Trader
 {
 private:
     string name;
     int coins;
-    virtual char specialty = 0;
-    virtual vector<Item> inventory;
+    char specialty;
+    vector<Item> inventory;
     double priceMultiplier;
 public:
     Trader();
@@ -24,6 +24,7 @@ public:
     char GetSpecialty() const;
     void SetSpecialty(char spec);
     void ListInventory() const;
+    Item ListInventory(int index) const;
     void AddToInventory(const Item stock);
     double GetPriceMultiplier() const;
     void SetPriceMultiplier(double mult);
