@@ -7,10 +7,10 @@ using namespace std;
 class Boss : public Monster
 {
 private:
-    char specialty = 'B';
     double attackMultiplier;
     double defenseMultiplier;
     double hpMultiplier;
+    double levelMultiplier;
 public:
     Boss();
     Boss(int lvl);
@@ -20,6 +20,8 @@ public:
     void SetDefenseMultiplier(double mult);
     double GetHpMultiplier() const;
     void SetHpMultiplier(double mult);
+    double GetLevelMultiplier() const;
+    void SetLevelMultiplier(double mult);
 };
 
 #endif

@@ -2,12 +2,18 @@
 #define MONSTER_H
 
 #include <string>
+#include <iostream>
 using namespace std;
+
+enum Species {Elf, Dwarf, Man, Goblin, Ork, Troll};
+enum CombatClass {Warrior, Archer, Wizard, None};
 
 class Monster
 {
-private:
-    char specialty;
+protected:
+    Species species;
+    CombatClass combatClass;
+    string name;
     int attack;
     int weaponDamage;
     int defense;
@@ -18,12 +24,13 @@ private:
 public:
     Monster();
     Monster(int level);
+    Monster(int level, Species spec, CombatClass combat);
     int GetAttack() const;
     void SetAttack(int att);
     int GetWeaponDamage() const;
     void SetWeaponDamage(int dmg);
     int GetDefense() const;
-    void SetDefense();
+    void SetDefense(int def);
     int GetHp() const;
     void SetHp(int h);
     int GetLevel() const;
@@ -32,6 +39,10 @@ public:
     void SetXp(double xp);
     int GetCoins() const;
     void SetCoins(int num);
+    Species GetSpecies();
+    void SetSpecies(Species spec);
+    CombatClass GetCombatClass();
+    void SetCombatClass(CombatClass combat);
 };
 
 #endif
