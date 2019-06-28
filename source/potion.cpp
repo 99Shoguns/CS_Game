@@ -7,6 +7,7 @@ Potion::Potion()
     quantity = 1;
     price = 10;
     effectModifier = 1;
+    isPotion = true;
 }
 Potion::Potion(string name)
 {
@@ -14,6 +15,7 @@ Potion::Potion(string name)
     quantity = 1;
     price = 10;
     effectModifier = 1;
+    isPotion = true;
 }
 Potion::Potion(string name, double price)
 {
@@ -21,12 +23,14 @@ Potion::Potion(string name, double price)
     quantity = 1;
     this->price = price;
     effectModifier = 1;
+    isPotion = true;
 }
 void Potion::ModifyQuantity(int num)
 {
     quantity += num;
 }
-//Make a template function
+
+//Effect functions
 void Potion::SetEffect(double change)
 {
     effect = change;
@@ -37,7 +41,7 @@ bool Potion::HasEffect() const
 }
 double Potion::GetEffect()
 {
-    return effect;
+    return (effect * effectModifier);
 }
 double Potion::GetEffectModifier() const
 {
@@ -55,6 +59,8 @@ void Potion::SetPotionType(PotionType ptype)
 {
     potionType = ptype;
 }
+
+//Check if two potions are the same
 bool Potion::SameAs(Potion p)
 {
     if (GetPrice() == p.GetPrice() && GetEffectModifier() == p.GetEffectModifier() && GetPotionType() == p.GetPotionType())

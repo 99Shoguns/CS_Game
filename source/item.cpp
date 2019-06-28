@@ -13,6 +13,7 @@ Item::Item()
     price = 10;
     damage = 0;
     defense = 0;
+    isPotion = false;
 }
 Item::Item(string name)
 {
@@ -21,6 +22,7 @@ Item::Item(string name)
     price = 10;
     damage = 0;
     defense = 0;
+    isPotion = false;
 }
 Item::Item(string name, double price)
 {
@@ -29,6 +31,7 @@ Item::Item(string name, double price)
     this->price = price;
     damage = 0;
     defense = 0;
+    isPotion = false;
 }
 
 //Data functions
@@ -159,4 +162,8 @@ bool Item::Compare(Item item)
 bool Item::IsPotion() const
 {
     return isPotion;
+}
+void Item::SetIsPotion(bool p)
+{
+    isPotion = p;
 }

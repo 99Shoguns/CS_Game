@@ -18,9 +18,40 @@ Player::Player()
     weaponDamage = 0;
     defense = 1;
     hp = 10;
+    maxHp = 10;
     level = 1;
     xp = 0;
     levelxp = 50;
+    Item firstSword("First Sword", 20);
+    firstSword.SetDamage(4);
+    firstSword.SetTypeIdentifier(Weapon);
+    Item firstHelmet("First Helmet", 15);
+    firstHelmet.SetDefense(2);
+    firstHelmet.SetTypeIdentifier(Helmet);
+    Item firstBodyArmor("First BodyArmor", 50);
+    firstBodyArmor.SetDefense(5);
+    firstBodyArmor.SetTypeIdentifier(BodyArmor);
+    Item firstLegArmor("First LegArmor", 25);
+    firstLegArmor.SetDefense(3);
+    firstLegArmor.SetTypeIdentifier(LegArmor);
+    Item firstBoots("First Boots", 10);
+    firstBoots.SetDefense(1);
+    firstBoots.SetTypeIdentifier(Boots);
+    Item firstGloves("First Gloves", 10);
+    firstGloves.SetDefense(1);
+    firstGloves.SetTypeIdentifier(Gloves);
+    Item firstShield("First Shield", 25);
+    firstShield.SetDefense(3);
+    firstShield.SetTypeIdentifier(Shield);
+    cout << "Player gear added.\n";
+    //Add gear to backpack and then equip it
+    equipment.push_back(firstSword);
+    equipment.push_back(firstHelmet);
+    equipment.push_back(firstBodyArmor);
+    equipment.push_back(firstLegArmor);
+    equipment.push_back(firstBoots);
+    equipment.push_back(firstGloves);
+    equipment.push_back(firstShield);
 }
 Player::Player(string name)
 {
@@ -30,9 +61,40 @@ Player::Player(string name)
     weaponDamage = 0;
     defense = 1;
     hp = 10;
+    maxHp = 10;
     level = 1;
     xp = 0;
     levelxp = 50;
+    Item firstSword("First Sword", 20);
+    firstSword.SetDamage(4);
+    firstSword.SetTypeIdentifier(Weapon);
+    Item firstHelmet("First Helmet", 15);
+    firstHelmet.SetDefense(2);
+    firstHelmet.SetTypeIdentifier(Helmet);
+    Item firstBodyArmor("First BodyArmor", 50);
+    firstBodyArmor.SetDefense(5);
+    firstBodyArmor.SetTypeIdentifier(BodyArmor);
+    Item firstLegArmor("First LegArmor", 25);
+    firstLegArmor.SetDefense(3);
+    firstLegArmor.SetTypeIdentifier(LegArmor);
+    Item firstBoots("First Boots", 10);
+    firstBoots.SetDefense(1);
+    firstBoots.SetTypeIdentifier(Boots);
+    Item firstGloves("First Gloves", 10);
+    firstGloves.SetDefense(1);
+    firstGloves.SetTypeIdentifier(Gloves);
+    Item firstShield("First Shield", 25);
+    firstShield.SetDefense(3);
+    firstShield.SetTypeIdentifier(Shield);
+    cout << "Player gear added.\n";
+    //Add gear to backpack and then equip it
+    equipment.push_back(firstSword);
+    equipment.push_back(firstHelmet);
+    equipment.push_back(firstBodyArmor);
+    equipment.push_back(firstLegArmor);
+    equipment.push_back(firstBoots);
+    equipment.push_back(firstGloves);
+    equipment.push_back(firstShield);
 }
 Player::Player(string name, Species spec, CombatClass combat)
 {
@@ -44,9 +106,40 @@ Player::Player(string name, Species spec, CombatClass combat)
     weaponDamage = 0;
     defense = 1;
     hp = 10;
+    maxHp = 10;
     level = 1;
     xp = 0;
     levelxp = 50;
+    Item firstSword("First Sword", 20);
+    firstSword.SetDamage(4);
+    firstSword.SetTypeIdentifier(Weapon);
+    Item firstHelmet("First Helmet", 15);
+    firstHelmet.SetDefense(2);
+    firstHelmet.SetTypeIdentifier(Helmet);
+    Item firstBodyArmor("First BodyArmor", 50);
+    firstBodyArmor.SetDefense(5);
+    firstBodyArmor.SetTypeIdentifier(BodyArmor);
+    Item firstLegArmor("First LegArmor", 25);
+    firstLegArmor.SetDefense(3);
+    firstLegArmor.SetTypeIdentifier(LegArmor);
+    Item firstBoots("First Boots", 10);
+    firstBoots.SetDefense(1);
+    firstBoots.SetTypeIdentifier(Boots);
+    Item firstGloves("First Gloves", 10);
+    firstGloves.SetDefense(1);
+    firstGloves.SetTypeIdentifier(Gloves);
+    Item firstShield("First Shield", 25);
+    firstShield.SetDefense(3);
+    firstShield.SetTypeIdentifier(Shield);
+    cout << "Player gear added.\n";
+    //Add gear to backpack and then equip it
+    equipment.push_back(firstSword);
+    equipment.push_back(firstHelmet);
+    equipment.push_back(firstBodyArmor);
+    equipment.push_back(firstLegArmor);
+    equipment.push_back(firstBoots);
+    equipment.push_back(firstGloves);
+    equipment.push_back(firstShield);
 }
 
 //Name functions
@@ -69,6 +162,7 @@ void Player::AddXp(double xp)
         level++;//Level up
         cout << "Congratulations!! You have reached level " << level << "!\n";
         levelxp *= 1.25;//Increases xp required for level up.
+        maxHp += 1;//Increase max hp by 1
     }
 }
 
@@ -79,7 +173,8 @@ int Player::GetLevel() const
 }
 void Player::SetLevel(int num)
 {
-    level += num;
+    level = num;
+    maxHp = (num + 9);//maxHp = 10 at lvl 1, 11 at 2, etc.
 }
 
 //Combat implementation
@@ -96,13 +191,22 @@ void Player::Combat(Monster *m)
     pAtt = (GetCombatModifier() * (GetAttack() + GetWeaponDamage() + GetLevel()));//Player attack = attack + weapon damage + level
     pDef = (GetCombatModifier() * GetDefense());
     //Fight while the monster and the player are both alive
-    while (m->GetHp() >= 0 && GetHp() >= 0){
+    while (mHp >= 0 && pHp >= 0){
         cout << "You attack!\n";
-        mHp -= (pAtt - mDef);
+        int playerattackdmg = (pAtt - mDef);
+        if (playerattackdmg <= 0){
+            playerattackdmg = 2;
+        }
+        mHp -= playerattackdmg;
         if (mHp > 0){//If the monster is still alive after player's attack
             cout << "The monster has " << mHp << " health left!\n";
             cout << "The monster attacks!\n";
-            pHp -= (mAtt - pDef);
+            int monsterattackdmg = (mAtt - pDef);
+            if (monsterattackdmg <= 0){
+                monsterattackdmg = 2;
+            }
+            pHp -= monsterattackdmg;
+            SetHp(pHp);
         }
         if (pHp > 0){//If the player is still alive after the monster's attack
             cout << "You have " << pHp << " health left!\n";
@@ -154,8 +258,8 @@ void Player::Trade(Trader &t)
             ans -= 1;//Make ans into an index for the player's vector of items.
             Item tradeItem = backpack.at(ans);//Make a trade item based on indicated index.
             if (t.GetCoins() >= tradeItem.GetPrice()){//If the trader has equal or more coins than the cost of the item.
-                t.SetCoins(-(tradeItem.GetPrice()));//Remove coins from trader's coins.
-                SetCoins(tradeItem.GetPrice());//Add coins to player's coins.
+                t.SetCoins( t.GetCoins() - tradeItem.GetPrice());//Remove coins from trader's coins.
+                SetCoins(GetCoins() + tradeItem.GetPrice());//Add coins to player's coins.
                 t.AddToInventory(tradeItem);//Add item to trader's inventory.
                 backpack.erase(backpack.begin() + ans);//Remove item from player inventory.
             }
@@ -168,8 +272,8 @@ void Player::Trade(Trader &t)
                     cin >> ans;
                 }
                 if (ans == 1){
-                    SetCoins(t.GetCoins());//Add coins to player's coins.
-                    t.SetCoins(-(t.GetCoins()));//Remove coins from trader's coins.
+                    SetCoins(GetCoins() + t.GetCoins());//Add coins to player's coins.
+                    t.SetCoins(0);//Remove coins from trader's coins.
                     t.AddToInventory(tradeItem);//Add item to trader's inventory.
                     backpack.erase(backpack.begin() + ans);//Remove item from player inventory.
                 }
@@ -185,8 +289,8 @@ void Player::Trade(Trader &t)
             ans -= 1;//Make ans into an index for the player's vector of potions.
             Potion tradePotion = potionsBag.at(ans);//Make a trade item base on indicated index.
             if (t.GetCoins() >= tradePotion.GetPrice()){//If the trader has equal or more coins than the cost of the item.
-                t.SetCoins(-(tradePotion.GetPrice()));//Remove coins from trader's coins.
-                SetCoins(tradePotion.GetPrice());//Add coins to player's coins.
+                t.SetCoins(t.GetCoins() - tradePotion.GetPrice());//Remove coins from trader's coins.
+                SetCoins(GetCoins() + tradePotion.GetPrice());//Add coins to player's coins.
                 t.AddToPotions(tradePotion);//Add potion to trader's potions.
                 potionsBag.erase(potionsBag.begin() + ans);//Remove potion from player's potions bag.
             }
@@ -198,9 +302,9 @@ void Player::Trade(Trader &t)
                     cout << "1 to accept this trade, 2 to decline this trade\n";
                     cin >> ans;
                 }
-                if (ans == 1){
-                    SetCoins(t.GetCoins());//Add coins to player's coins.
-                    t.SetCoins(-(t.GetCoins()));//Remove coins from trader's coins.
+                if (ans == 1){//If the player will accept the fewer coins
+                    SetCoins(GetCoins() + t.GetCoins());//Add coins to player's coins.
+                    t.SetCoins(0);//Remove coins from trader's coins.
                     t.AddToPotions(tradePotion);//Add potion to trader's potions.
                     potionsBag.erase(potionsBag.begin() + ans);//Remove potion from player's potions bag.
                 }
@@ -230,8 +334,8 @@ void Player::Trade(Trader &t)
             ans -= 1;//Make ans into an index for the trader's vector of items.
             Item tradeItem = t.TradeItem(ans);
             if (GetCoins() >= tradeItem.GetPrice()){//If the player has equal or more coins than the cost of the item.
-                SetCoins(-(tradeItem.GetPrice()));//Remove coins from player's coins.
-                t.SetCoins(tradeItem.GetPrice());//Add coins to trader's coins.
+                SetCoins(GetCoins() - tradeItem.GetPrice());//Remove coins from player's coins.
+                t.SetCoins(t.GetCoins() + tradeItem.GetPrice());//Add coins to trader's coins.
                 backpack.push_back(tradeItem);//Add item to player's inventory.
                 t.RemoveFromInventory(tradeItem);//Remove item from trader's inventory.
             }
@@ -246,8 +350,8 @@ void Player::Trade(Trader &t)
             ans -= 1;//Make ans into an index for the trader's vector of items.
             Potion tradePotion = t.TradePotion(ans);
             if (GetCoins() >= tradePotion.GetPrice()){//If the player has equal or more coins than the cost of the potion.
-                SetCoins(-(tradePotion.GetPrice()));//Remove coins from player's coins.
-                t.SetCoins(tradePotion.GetPrice());//Add coins to trader's coins.
+                SetCoins(GetCoins() - tradePotion.GetPrice());//Remove coins from player's coins.
+                t.SetCoins(t.GetCoins() + tradePotion.GetPrice());//Add coins to trader's coins.
                 potionsBag.push_back(tradePotion);//Add potion to player's potions bag.
                 t.RemoveFromPotions(tradePotion);//Remove potion from player's inventory.
             }
@@ -285,6 +389,10 @@ void Player::Equip(int index)
         }    
     }
 }
+void Player::AddToBackpack(Item i)
+{
+    backpack.push_back(i);
+}
 void Player::UnEquip(int index)
 {
     int size = equipment.size();
@@ -315,24 +423,13 @@ void Player::CheckPotionsBag() const
 }
 
 //Potion
-void Player::DrinkPotion(Potion &p)
+void Player::DrinkPotion(int index)
 {
-    int size = potionsBag.size();//Set the size for the loop
-    for (int i = 0; i < size; i++)
-    {
-        if (potionsBag.at(i).SameAs(p))
-        {//If the item is in the Potions Bag
-            p.ActivateEffect();//Activate potion effect
-            p.ModifyQuantity(-1);//Subtract 1 from potion quantity
-            if (p.GetQuantity() == 0)
-            {//If no more of this potion remains in the Potions Bag
-                potionsBag.erase(potionsBag.begin() + i);//Remove item from Potions Bag
-            }
-        }
-        else if ((!(potionsBag.at(i).SameAs(p))) && (i == size - 1))
-        {//If item is not in backpack, notify player of error.
-            cout << "That item is not in your backpack and can't be used!\n";
-        }
+    if (potionsBag.at(index).GetPotionType() == HealthPotion){
+        hp += potionsBag.at(index).GetEffect();
+    }
+    else if(potionsBag.at(index).GetPotionType() == XpPotion){
+        xp += potionsBag.at(index).GetEffect();
     }
 }
 
@@ -369,13 +466,21 @@ void Player::SetHp(int h)
 {
     hp = h;
 }
+int Player::GetMaxHp() const
+{
+    return maxHp;
+}
+void Player::SetMaxHp(int num)
+{
+    maxHp = num;
+}
 int Player::GetCoins() const
 {
     return coins;
 }
 void Player::SetCoins(int c)
 {
-    coins += c;
+    coins = c;
 }
 void Player::SpendCoins(int c)
 {
@@ -414,5 +519,23 @@ void Player::SetCombatModifier(CombatClass enemy)
     //If fighting with no combat advantage or disadvantage
     else{
         combatModifier = 1;
+    }
+}
+void Player::Sleep(bool inBed)
+{
+    if (inBed){
+        hp = maxHp;//Fully heal player if sleeping in bed.
+    }
+    else{ //If player isn't sleeping in a bed, heal by 10% of max hp.
+        int heal = (maxHp * 0.1);
+        //If the player isn't already at full health.
+        if (hp < maxHp){
+            if (hp < (maxHp + heal)){//If player won't go over max hp if healed by 10% of max hp
+                hp += heal;//Heal player by 10% of max health.
+            }
+            else if(hp >= (maxHp + heal)){//If hp will go over max hp if healed by 10% of max health.
+                hp = maxHp;//Fully heal
+            }
+        }
     }
 }
