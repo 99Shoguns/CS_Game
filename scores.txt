@@ -1,0 +1,5 @@
+Scores:
+Monster kills: 0
+Boss kills: 0
+Level: 1
+Day reached: 1
