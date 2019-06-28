@@ -37,8 +37,8 @@ Monster::Monster()
     defense = r2; //Random defense from 0-3.
     int r3 = rand() % 5 + 5;
     hp = r3; //Random hp from 5-10.
-    int r4 = rand() % 10 + 1;
-    level = r4; //Random level from 1-10.
+    int r4 = rand() % 3 + 1;
+    level = r4; //Random level from 1-3.
     int r5 = rand() % 45 + 5;
     xp = r5; //Random xp reward from 5-50.
     coins = r5; //Random coin reward from 5-50.

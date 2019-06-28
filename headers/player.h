@@ -20,6 +20,7 @@ private:
     int weaponDamage;
     int defense;
     int hp;
+    int maxHp;
     int level;
     double xp;
     double levelxp;
@@ -39,10 +40,11 @@ public:
     void Combat(Monster *m);
     void Trade(Trader &t);
     void Equip(int index);
+    void AddToBackpack(Item i);
     void UnEquip(int index);
     void CheckBackpack() const;
     void CheckPotionsBag() const;
-    void DrinkPotion(Potion &p);
+    void DrinkPotion(int index);
     int GetAttack() const;
     void SetAttack(int att);
     int GetWeaponDamage() const;
@@ -51,7 +53,9 @@ public:
     void SetDefense(int def);
     int GetHp() const;
     void SetHp(int h);
-    virtual int GetCoins() const;
+    int GetMaxHp() const;
+    void SetMaxHp(int num);
+    int GetCoins() const;
     void SetCoins(int c);
     void SpendCoins(int c);
     Species GetSpecies();
@@ -60,6 +64,7 @@ public:
     void SetCombatClass(CombatClass combat);
     double GetCombatModifier();
     void SetCombatModifier(CombatClass enemy);
+    void Sleep(bool inBed);
 };
 
 #endif

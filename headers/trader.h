@@ -37,26 +37,7 @@ public:
     void SetPriceMultiplier(double mult);
     Item TradeItem(int index);
     Potion TradePotion(int index);
-    /*
-    Item purchase = t.ListInventory(ans);
-    cout << "So you want to purchase a " << purchase.GetName() << "? (1 to confirm, 2 to cancel)\n";
-    cin >> ans;//Comfirm purchase
-    if (ans == 1){//Implement Trade function to verify player input and debug any issues within Trader class functions///////////////////////////////////////////////////////////
-        if (coins > purchase.GetPrice()){
-            coins -= purchase.GetPrice();//Pay for item
-            backpack.push_back(purchase);//Add item to backpack
-        }
-        else{//If player can't afford item
-            cout << "You do not have enough coins for this purchase!\n";
-        }
-    }
-    else if (ans == 2){//If player cancels trade
-        cout << "You don't want to purchase this item.\n";
-    }
-    else{//Invalid input
-        cout << "You have input an invalid answer. You need to input a 1 to confirm, or a 2 to cancel.\n";
-    }
-    */
+   
 };
 
 #endif

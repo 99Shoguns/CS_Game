@@ -43,6 +43,7 @@ public:
     virtual void SetEffectModifier(double mod);
     bool Compare(Item item);
     bool IsPotion() const;
+    void SetIsPotion(bool p);
 };
 
 #endif
